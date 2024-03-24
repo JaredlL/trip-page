@@ -1,6 +1,18 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { computed } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
 import TheHeader from './components/TheHeader.vue'
+
+const route = useRoute()
+
+const headerMsg = computed(() => {
+  const path = route.path
+  if (path.includes('/trip')) {
+    return 'Trip details'
+  } else {
+    return 'Select a trip'
+  }
+})
 </script>
 
 <template>
@@ -8,9 +20,8 @@ import TheHeader from './components/TheHeader.vue'
     <a href="https://www.ember.to/">
       <img alt="Ember logo" class="logo" src="@/assets/ember-logo.svg" width="125" height="50" />
     </a>
-
     <div class="wrapper">
-      <TheHeader msg="Select a trip" />
+      <TheHeader :msg="headerMsg" />
     </div>
   </header>
 

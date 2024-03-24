@@ -1,20 +1,15 @@
-<template>
-  <div>
-    <h2>Route Number: {{ routeData?.description.route_number }}</h2>
-    <h2>BusId: {{ routeData?.vehicle.id }}</h2>
-    <h2>Location: {{ routeData?.vehicle.gps.latitude }} {{ routeData?.vehicle.gps.longitude }}</h2>
-    <h2>LastUpdated: {{ routeData?.vehicle.gps.last_updated }}</h2>
-  </div>
-</template>
-
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 import type { RouteData } from '@/types/RouteData.ts'
+import TripMap from './TripMap.vue'
 
 export default defineComponent({
   name: 'App',
+  components: {
+    TripMap // This registers the TripMap component
+  },
   setup() {
     const route = useRoute()
     const tripId = route.params.tripUid
@@ -36,10 +31,19 @@ export default defineComponent({
 })
 </script>
 
+<template>
+  <div>
+    <h2>Route Number: {{ routeData?.description.route_number }}</h2>
+    <h2>BusId: {{ routeData?.vehicle.id }}</h2>
+    <h2>Location: {{ routeData?.vehicle.gps.latitude }} {{ routeData?.vehicle.gps.longitude }}</h2>
+    <h2>LastUpdated: {{ routeData?.vehicle.gps.last_updated }}</h2>
+    <TripMap />
+  </div>
+</template>
+
 <style>
 #app {
   text-align: center;
-  margin-top: 50px;
 }
 input {
   margin: 0 10px;

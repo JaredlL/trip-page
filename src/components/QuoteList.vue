@@ -1,26 +1,3 @@
-<template>
-  <div>
-    <table>
-      <thead>
-        <tr>
-          <th>Origin</th>
-          <th>Destination</th>
-          <th>Departure</th>
-          <th>Arrival</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="leg in legs" :key="leg.trip_uid" @click="navigate(leg.trip_uid)">
-          <td>{{ leg.origin.detailed_name }}</td>
-          <td>{{ leg.destination.detailed_name }}</td>
-          <td>{{ new Date(leg.departure.scheduled).toLocaleTimeString() }}</td>
-          <td>{{ new Date(leg.arrival.scheduled).toLocaleTimeString() }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</template>
-
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
 import axios from 'axios'
@@ -63,7 +40,12 @@ export default defineComponent({
           `https://api.ember.to/v1/quotes/?origin=13&destination=42&departure_date_from=${startOfTodayISO}&departure_date_to=${endOfTodayISO}`
         )
         rootObject.value = response.data
-        legs.value = rootObject.value?.quotes.flatMap((x) => x.legs)
+        const now = new Date()
+
+        // Only display trips that are still in progress
+        legs.value = rootObject.value?.quotes
+          .flatMap((x) => x.legs)
+          .filter((x) => x.arrival.actual == null || new Date(x.arrival.actual) > now)
       } catch (error) {
         console.error('Error fetching quotes:', error)
       }
@@ -79,6 +61,29 @@ export default defineComponent({
   }
 })
 </script>
+
+<template>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>Origin</th>
+          <th>Destination</th>
+          <th>Departure (scheduled)</th>
+          <th>Arrival (scheduled)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="leg in legs" :key="leg.trip_uid" @click="navigate(leg.trip_uid)">
+          <td>{{ leg.origin.name }}, {{ leg.origin.region_name }}</td>
+          <td>{{ leg.destination.name }}, {{ leg.destination.region_name }}</td>
+          <td>{{ new Date(leg.departure.scheduled).toLocaleTimeString() }}</td>
+          <td>{{ new Date(leg.arrival.scheduled).toLocaleTimeString() }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
 
 <style>
 table {
