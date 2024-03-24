@@ -52,6 +52,7 @@ export interface Vehicle {
   is_backup_vehicle: boolean
   owner_id: number
   gps: GPS
+  secondary_gps: GPS
 }
 
 export interface GPS {

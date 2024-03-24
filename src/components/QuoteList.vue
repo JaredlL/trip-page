@@ -7,9 +7,7 @@ import type { RootQuoteObject, Leg } from '@/types/RootQuoteObject.ts'
 export default defineComponent({
   name: 'QuotesTable',
   setup() {
-    const rootObject = ref<RootQuoteObject>()
-    const legs = ref<Leg[]>()
-
+    const legs = ref<Leg[]>([])
     const router = useRouter()
 
     function getEndOfTodayISO8601(): string {
@@ -32,20 +30,31 @@ export default defineComponent({
       return endOfToday.toISOString()
     }
 
+    async function fetchQuote(origin: number, destination: number) {
+      const startOfTodayISO = getStartOfTodayISO8601()
+      const endOfTodayISO = getEndOfTodayISO8601()
+      const response = await axios.get<RootQuoteObject>(
+        `https://api.ember.to/v1/quotes/?origin=${origin}&destination=${destination}&departure_date_from=${startOfTodayISO}&departure_date_to=${endOfTodayISO}`
+      )
+      return response.data.quotes.flatMap((quote) => quote.legs)
+    }
+
     const fetchQuotes = async () => {
       try {
-        const startOfTodayISO = getStartOfTodayISO8601()
-        const endOfTodayISO = getEndOfTodayISO8601()
-        const response = await axios.get(
-          `https://api.ember.to/v1/quotes/?origin=13&destination=42&departure_date_from=${startOfTodayISO}&departure_date_to=${endOfTodayISO}`
-        )
-        rootObject.value = response.data
+        const pairs = [
+          { origin: 13, destination: 42 },
+          { origin: 42, destination: 13 },
+          { origin: 66, destination: 72 },
+          { origin: 72, destination: 66 }
+        ]
         const now = new Date()
-
-        // Only display trips that are still in progress
-        legs.value = rootObject.value?.quotes
-          .flatMap((x) => x.legs)
-          .filter((x) => x.arrival.actual == null || new Date(x.arrival.actual) > now)
+        const fetchPromises = pairs.map((pair) => fetchQuote(pair.origin, pair.destination))
+        Promise.all(fetchPromises).then((results) => {
+          legs.value = results
+            .flat()
+            // remove trips which have finished
+            .filter((leg) => !leg.arrival.actual || new Date(leg.arrival.actual) > now)
+        })
       } catch (error) {
         console.error('Error fetching quotes:', error)
       }
