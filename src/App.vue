@@ -1,19 +1,16 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
+import TheHeader from './components/TheHeader.vue'
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <a href="https://www.ember.to/">
+      <img alt="Ember logo" class="logo" src="@/assets/ember-logo.svg" width="125" height="50" />
+    </a>
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+      <TheHeader msg="Select a trip" />
     </div>
   </header>
 
@@ -59,7 +56,7 @@ nav a:first-of-type {
 @media (min-width: 1024px) {
   header {
     display: flex;
-    place-items: center;
+    place-items: top;
     padding-right: calc(var(--section-gap) / 2);
   }
 
