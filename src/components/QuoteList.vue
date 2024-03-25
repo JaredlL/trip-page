@@ -9,55 +9,56 @@ export default defineComponent({
   setup() {
     const legs = ref<Leg[]>([])
     const router = useRouter()
+    const now = new Date()
 
-    function getEndOfTodayISO8601(): string {
-      const now = new Date()
-      const endOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999)
-      return endOfToday.toISOString()
-    }
+    function getISO8601StartEndOfDay() {
+      const startOfToday = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        0,
+        0,
+        0,
+        0
+      ).toISOString()
 
-    function getStartOfTodayISO8601(): string {
-      const now = new Date()
       const endOfToday = new Date(
         now.getFullYear(),
         now.getMonth(),
         now.getDate(),
-        0o0,
-        0o0,
-        0o0,
-        0o00
-      )
-      return endOfToday.toISOString()
+        23,
+        59,
+        59,
+        999
+      ).toISOString()
+
+      return { startOfToday, endOfToday }
     }
 
-    async function fetchQuote(origin: number, destination: number) {
-      const startOfTodayISO = getStartOfTodayISO8601()
-      const endOfTodayISO = getEndOfTodayISO8601()
-      const response = await axios.get<RootQuoteObject>(
-        `https://api.ember.to/v1/quotes/?origin=${origin}&destination=${destination}&departure_date_from=${startOfTodayISO}&departure_date_to=${endOfTodayISO}`
-      )
-      return response.data.quotes.flatMap((quote) => quote.legs)
-    }
-
-    const fetchQuotes = async () => {
+    async function fetchAndUpdateQuotes(origin: number, destination: number) {
+      const { startOfToday, endOfToday } = getISO8601StartEndOfDay()
       try {
-        const pairs = [
-          { origin: 13, destination: 42 },
-          { origin: 42, destination: 13 },
-          { origin: 66, destination: 72 },
-          { origin: 72, destination: 66 }
-        ]
-        const now = new Date()
-        const fetchPromises = pairs.map((pair) => fetchQuote(pair.origin, pair.destination))
-        Promise.all(fetchPromises).then((results) => {
-          legs.value = results
-            .flat()
-            // remove trips which have finished
-            .filter((leg) => !leg.arrival.actual || new Date(leg.arrival.actual) > now)
-        })
+        const response = await axios.get<RootQuoteObject>(
+          `https://api.ember.to/v1/quotes/?origin=${origin}&destination=${destination}&departure_date_from=${startOfToday}&departure_date_to=${endOfToday}`
+        )
+        const newLegs = response.data.quotes
+          .flatMap((quote) => quote.legs)
+          .filter((leg) => !leg.arrival.actual || new Date(leg.arrival.actual) > now)
+
+        legs.value = [...legs.value, ...newLegs] // Merge and trigger reactivity
       } catch (error) {
         console.error('Error fetching quotes:', error)
       }
+    }
+
+    const fetchQuotes = async () => {
+      const pairs = [
+        { origin: 13, destination: 42 },
+        { origin: 42, destination: 13 },
+        { origin: 66, destination: 72 },
+        { origin: 72, destination: 66 }
+      ]
+      pairs.forEach((pair) => fetchAndUpdateQuotes(pair.origin, pair.destination))
     }
 
     const navigate = (tripId: string) => {

@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, provide } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 import TheHeader from './components/TheHeader.vue'
+import { DateNowKey } from './InjectionKeys.ts'
+import type { DateNow } from './types/Clock.ts'
+
+provide<DateNow>(DateNowKey, () => new Date())
 
 const route = useRoute()
-
 const headerMsg = computed(() => {
   const path = route.path
   if (path.includes('/trip')) {
