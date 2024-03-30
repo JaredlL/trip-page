@@ -1,17 +1,32 @@
+export interface RouteData {
+  route: RouteStop[]
+  vehicle: Vehicle
+  description: Description
+}
+
 export interface RouteStop {
   id: number
-  departure: ScheduledTime
-  arrival: ScheduledTime
+  departure: Departure
+  arrival: Arrival
   location: Location
   allow_boarding: boolean
   allow_drop_off: boolean
   booking_cut_off_mins: number
   pre_booked_only: boolean
   skipped: boolean
+  predictions: Predictions
 }
 
-export interface ScheduledTime {
+export interface Departure {
   scheduled: string
+  actual?: string
+  estimated: string
+}
+
+export interface Arrival {
+  scheduled: string
+  actual?: string
+  estimated: string
 }
 
 export interface Location {
@@ -27,19 +42,23 @@ export interface Location {
   google_place_id: string
   atco_code: string
   timezone: string
-  zone: Coordinate[]
+  zone: Zone[]
   heading: number
-  direction?: string // Optional since not all locations may have a direction
+  direction?: string
 }
 
-export interface Coordinate {
+export interface Zone {
   latitude: number
   longitude: number
 }
 
+export interface Predictions {
+  state_of_charge: number
+}
+
 export interface Vehicle {
-  seat: number
   wheelchair: number
+  seat: number
   bicycle: number
   id: number
   plate_number: string
@@ -51,11 +70,11 @@ export interface Vehicle {
   colour: string
   is_backup_vehicle: boolean
   owner_id: number
-  gps: GPS
-  secondary_gps: GPS
+  gps: Gps
+  secondary_gps: Gps
 }
 
-export interface GPS {
+export interface Gps {
   last_updated: string
   longitude: number
   latitude: number
@@ -69,10 +88,4 @@ export interface Description {
   type: string
   is_cancelled: boolean
   route_id: number
-}
-
-export interface RouteData {
-  route: RouteStop[]
-  vehicle: Vehicle
-  description: Description
 }

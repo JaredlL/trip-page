@@ -81,7 +81,7 @@ export interface Amenities {
   has_toilet: boolean
 }
 
-export interface RootQuoteObject {
+export interface Quotes {
   quotes: Quote[]
   min_card_transaction: number
 }

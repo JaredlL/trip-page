@@ -2,7 +2,7 @@
 import { defineComponent, onMounted, ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
-import type { RootQuoteObject, Leg } from '@/types/RootQuoteObject.ts'
+import type { Quotes, Leg } from '@/types/Quotes.ts'
 
 export default defineComponent({
   name: 'QuotesTable',
@@ -38,19 +38,28 @@ export default defineComponent({
     async function fetchAndUpdateQuotes(origin: number, destination: number) {
       const { startOfToday, endOfToday } = getISO8601StartEndOfDay()
       try {
-        const response = await axios.get<RootQuoteObject>(
+        const response = await axios.get<Quotes>(
           `https://api.ember.to/v1/quotes/?origin=${origin}&destination=${destination}&departure_date_from=${startOfToday}&departure_date_to=${endOfToday}`
         )
+
+        // Filter for in-progress legs
         const newLegs = response.data.quotes
           .flatMap((quote) => quote.legs)
-          .filter((leg) => !leg.arrival.actual || new Date(leg.arrival.actual) > now)
+          .filter((leg) => leg.arrival.actual == null)
+          .filter((leg) => leg.departure.actual)
 
-        legs.value = [...legs.value, ...newLegs] // Merge and trigger reactivity
+        legs.value = [...legs.value, ...newLegs].sort(
+          (a, b) =>
+            new Date(a.departure.scheduled).getTime() - new Date(b.departure.scheduled).getTime()
+        )
       } catch (error) {
         console.error('Error fetching quotes:', error)
       }
     }
 
+    // 66 Glasgow
+    // 72 Dundee
+    // 13 Edinburgh
     const fetchQuotes = async () => {
       const pairs = [
         { origin: 13, destination: 42 },
@@ -73,7 +82,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div>
+  <div class="quoteList">
     <table>
       <thead>
         <tr>
@@ -96,6 +105,10 @@ export default defineComponent({
 </template>
 
 <style>
+.quoteList {
+  padding: 0 1.5rem 0 1.5rem;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -114,3 +127,4 @@ tbody tr:hover {
   background-color: var(--color-background-mute);
 }
 </style>
+@/types/Quote
