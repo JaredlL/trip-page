@@ -1,26 +1,27 @@
 <script lang="ts" setup>
-import { onMounted, watch, ref } from 'vue'
-import type { RouteData } from '@/types/RouteData.ts'
+import { onMounted, watch } from 'vue'
+import type { RouteData, RouteStop, Vehicle } from '@/types/RouteData'
 import { mostRecentGps, hasVisitedOrSkipped, stopVisitationContextString } from '@/types/Util'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import busIconSvg from '@/assets/bus-icon.svg'
+import vehicleIconSvg from '@/assets/bus-icon.svg'
+import gpsIconSvg from '@/assets/gps-icon.svg'
 
 const props = defineProps<{
   routeData: RouteData
+  focusItem: RouteStop | Vehicle | undefined
 }>()
 
-const followBus = ref(true)
-const followButtonText = ref('Unfollow Bus')
-const busIcon = L.icon({
-  iconUrl: busIconSvg,
+const vehicleIcon = L.icon({
+  iconUrl: vehicleIconSvg,
   iconSize: [35, 45],
   iconAnchor: [17, 45],
   popupAnchor: [0, -28]
 })
 
 let map: L.Map | null = null
-let busMarker: L.Marker | null = null
+let vehicleMarker: L.Marker | null = null
+let userMarker: L.Marker | null = null
 
 // Reference added stop markers so that we can clear them on redraw
 let stopMarkers: L.Marker[] = []
@@ -36,32 +37,38 @@ function customIcon(color: String) {
 }
 
 onMounted(() => {
-  // Default to Dundee if undefined
-  const latitude = props.routeData.vehicle.gps.latitude ?? 56.462
-  const longitude = props.routeData.vehicle.gps.longitude ?? -2.9707
+  const recentGps = mostRecentGps(props.routeData.vehicle)
 
-  map = L.map('map').setView([latitude, longitude], 13)
+  // Directly accessing the DOM is discouraged.
+  // Investing getting leaflet working with ref is deserved -
+  // https://vuejs.org/guide/essentials/template-refs#ref-on-component
+  map = L.map('map').setView([recentGps.latitude, recentGps.longitude], 13)
 
+  // https://wiki.openstreetmap.org/wiki/Raster_tile_providers
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution:
       'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map)
 
-  updateBusMarker(latitude, longitude)
-  addStopMarkers(props.routeData, map)
+  updateVehicleMarker(props.routeData.vehicle)
+  refreshStopMarkers(props.routeData, map)
 })
 
-function updateBusMarker(latitude: number, longitude: number) {
-  if (busMarker && map) {
-    // If marker already exists, just set its new position
-    busMarker.setLatLng([latitude, longitude])
+function updateVehicleMarker(vehicle: Vehicle) {
+  const recentGps = mostRecentGps(vehicle)
+  if (vehicleMarker && map) {
+    // If vehicle marker already exists, just set its new position
+    vehicleMarker.setLatLng([recentGps.latitude, recentGps.longitude]).bindPopup(vehicle.name)
   } else if (map) {
-    busMarker = L.marker([latitude, longitude], { icon: busIcon }).addTo(map)
+    vehicleMarker = L.marker([recentGps.latitude, recentGps.longitude], { icon: vehicleIcon })
+      .addTo(map)
+      .bindPopup(vehicle.name)
   }
 }
 
-function addStopMarkers(routeData: RouteData, map: L.Map) {
+function refreshStopMarkers(routeData: RouteData, map: L.Map) {
   for (var stopmarker of stopMarkers) {
+    // This unfortunatly means any open popups will be lost
     stopmarker.remove()
   }
 
@@ -69,9 +76,10 @@ function addStopMarkers(routeData: RouteData, map: L.Map) {
 
   for (var stop of routeData.route) {
     const color = hasVisitedOrSkipped(stop) || stop.skipped ? 'grey' : 'green'
-    L.marker([stop.location.lat, stop.location.lon], { icon: customIcon(color) })
+    const newMarker = L.marker([stop.location.lat, stop.location.lon], { icon: customIcon(color) })
       .addTo(map)
       .bindPopup(stopVisitationContextString(stop))
+    stopMarkers.push(newMarker)
   }
 }
 
@@ -79,42 +87,64 @@ function addStopMarkers(routeData: RouteData, map: L.Map) {
 watch(
   () => props.routeData,
   (newVal) => {
-    const gps = mostRecentGps(newVal.vehicle)
     if (map) {
-      if (followBus.value) {
-        map.setView([gps.latitude, gps.longitude])
-      }
-
-      updateBusMarker(gps.latitude, gps.longitude)
+      updateVehicleMarker(newVal.vehicle)
 
       // Remove and redraw the stop markers each update.
-      addStopMarkers(newVal, map)
+      refreshStopMarkers(newVal, map)
+
+      // If the focus item is the bus, follow it
+      if (isVehicle(props.focusItem)) {
+        const recentGps = mostRecentGps(props.routeData?.vehicle)
+        map.flyTo([recentGps.latitude, recentGps.longitude], undefined, {
+          animate: true,
+          duration: 0.5
+        })
+      }
     }
   },
   { deep: true }
 )
 
-// Function to toggle following the bus
-function toggleFollowBus() {
-  followBus.value = !followBus.value
-  followButtonText.value = followBus.value ? 'Unfollow Bus' : 'Follow Bus'
-  const gps = mostRecentGps(props.routeData.vehicle)
-  const lat = gps.latitude
-  const long = gps.longitude
-  if (followBus.value) {
-    map?.setView([lat, long], map.getZoom())
+// Watch for triggers to zoom to focus item
+watch(() => props.focusItem, flyToFocusItem)
+
+function flyToFocusItem(focusItem: RouteStop | Vehicle | undefined) {
+  if (map) {
+    if (isVehicle(focusItem)) {
+      const recentGps = mostRecentGps(props.routeData?.vehicle)
+      map.flyTo([recentGps.latitude, recentGps.longitude], undefined, {
+        animate: true,
+        duration: 0.5
+      })
+    } else if (isRouteStop(focusItem)) {
+      map.flyTo([focusItem.location.lat, focusItem.location.lon], undefined, {
+        animate: true,
+        duration: 0.5
+      })
+    }
   }
 }
 
-const zoomToUserLocation = () => {
+function isRouteStop(obj: any): obj is RouteStop {
+  return (obj as RouteStop)?.location !== undefined
+}
+
+function isVehicle(obj: any): obj is Vehicle {
+  return (obj as Vehicle)?.gps !== undefined
+}
+
+const displayUserLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         if (map) {
+          updateUserMarker(map, position)
           map.setView([position.coords.latitude, position.coords.longitude], 15)
         }
       },
       () => {
+        // It would be better to have a reusable app component for alerts
         alert('Unable to retrieve your location')
       }
     )
@@ -122,13 +152,27 @@ const zoomToUserLocation = () => {
     alert('Geolocation is not supported by your browser')
   }
 }
+
+function updateUserMarker(map: L.Map, position: GeolocationPosition) {
+  if (userMarker && map) {
+    // If marker already exists, just set its new position
+    userMarker.setLatLng([position.coords.latitude, position.coords.longitude])
+  } else if (map) {
+    userMarker = L.marker([position.coords.latitude, position.coords.longitude], {
+      icon: customIcon('pink')
+    })
+      .addTo(map)
+      .bindPopup('Your location')
+  }
+}
 </script>
 
 <template>
   <div class="map-container">
     <div id="map"></div>
-    <button class="follow-button" @click="toggleFollowBus">{{ followButtonText }}</button>
-    <button class="user-location-button" @click="zoomToUserLocation">My location</button>
+    <button class="user-location-button" @click="displayUserLocation">
+      <img :src="gpsIconSvg" />
+    </button>
   </div>
 </template>
 
@@ -138,17 +182,9 @@ const zoomToUserLocation = () => {
   height: 450px;
 }
 
-.follow-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 400; /* Ensure it's above Leaflet's controls */
-  padding: 5px 10px;
-}
-
 .user-location-button {
   position: absolute;
-  top: 50px;
+  top: 10px;
   right: 10px;
   z-index: 400; /* Ensure it's above Leaflet's controls */
   padding: 5px 10px;

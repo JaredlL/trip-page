@@ -1,8 +1,9 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
-import axios from 'axios'
 import { useRouter } from 'vue-router'
 import type { Quotes, Leg } from '@/types/Quotes.ts'
+import axios from 'axios'
+import config from '../config'
 
 export default defineComponent({
   name: 'QuotesTable',
@@ -39,14 +40,15 @@ export default defineComponent({
       const { startOfToday, endOfToday } = getISO8601StartEndOfDay()
       try {
         const response = await axios.get<Quotes>(
-          `https://api.ember.to/v1/quotes/?origin=${origin}&destination=${destination}&departure_date_from=${startOfToday}&departure_date_to=${endOfToday}`
+          `${config.apiBaseUrl}/quotes/?origin=${origin}&destination=${destination}&departure_date_from=${startOfToday}&departure_date_to=${endOfToday}`
         )
 
         // Filter for in-progress legs
-        const newLegs = response.data.quotes
-          .flatMap((quote) => quote.legs)
-          .filter((leg) => leg.arrival.actual == null)
-          .filter((leg) => leg.departure.actual)
+        const newLegs =
+          response?.data.quotes
+            .flatMap((quote) => quote.legs)
+            .filter((leg) => leg.arrival.actual == null)
+            .filter((leg) => leg.departure.actual) ?? []
 
         legs.value = [...legs.value, ...newLegs].sort(
           (a, b) =>

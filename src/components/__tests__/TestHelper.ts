@@ -1,0 +1,786 @@
+import type { RouteData } from '../../types/RouteData'
+
+export function createRouteData(): RouteData {
+  return {
+    route: [
+      {
+        id: 925806,
+        departure: {
+          scheduled: '2024-03-30T20:21:00+00:00',
+          actual: '2024-03-30T20:22:31+00:00',
+          estimated: '2024-03-30T20:21:00+00:00'
+        },
+        arrival: {
+          scheduled: '2024-03-30T20:21:00+00:00',
+          actual: '2024-03-30T20:10:00+00:00',
+          estimated: '2024-03-30T20:21:00+00:00'
+        },
+        location: {
+          id: 66,
+          type: 'STOP_POINT',
+          name: 'Buchanan Bus Stn (Stance 53)',
+          region_name: 'Glasgow',
+          code: 'GLA',
+          code_detail: 'Buchanan Bus Stn',
+          detailed_name: 'Buchanan Bus Station (Stance 53)',
+          lon: -4.25172,
+          lat: 55.86539,
+          google_place_id: 'ChIJeda6eB9EiEgRnGBh2eKH5bE',
+          atco_code: '60903769',
+          timezone: 'Europe/London',
+          zone: [
+            {
+              latitude: 55.865056875271264,
+              longitude: -4.252324939447394
+            },
+            {
+              latitude: 55.86484990290668,
+              longitude: -4.249005387522362
+            },
+            {
+              latitude: 55.8654235093243,
+              longitude: -4.248731392760296
+            },
+            {
+              latitude: 55.865701439284294,
+              longitude: -4.252156327286123
+            },
+            {
+              latitude: 55.865056875271264,
+              longitude: -4.252324939447394
+            }
+          ],
+          heading: 270
+        },
+        allow_boarding: true,
+        allow_drop_off: false,
+        booking_cut_off_mins: 0,
+        pre_booked_only: false,
+        skipped: false,
+        predictions: {
+          state_of_charge: 0.5597379090909091
+        }
+      },
+      {
+        id: 925807,
+        departure: {
+          scheduled: '2024-03-30T20:38:00+00:00',
+          estimated: '2024-03-30T20:39:25+00:00'
+        },
+        arrival: {
+          scheduled: '2024-03-30T20:38:00+00:00',
+          estimated: '2024-03-30T20:39:25+00:00'
+        },
+        location: {
+          id: 67,
+          type: 'STOP_POINT',
+          name: 'Cumbernauld Greenfaulds',
+          region_name: 'Cumbernauld',
+          code: 'CUB',
+          code_detail: 'Greenfaulds',
+          detailed_name: 'Greenfaulds High School (Eastbound)',
+          direction: 'EASTBOUND',
+          lon: -4.00606,
+          lat: 55.93859,
+          google_place_id: 'ChIJ4Ym1EbZoiEgRxSDMK9T2Az0',
+          atco_code: '61601259',
+          timezone: 'Europe/London',
+          zone: [
+            {
+              latitude: 55.93862840804922,
+              longitude: -4.006324410438538
+            },
+            {
+              latitude: 55.938415087504545,
+              longitude: -4.00626003742218
+            },
+            {
+              latitude: 55.938469168880545,
+              longitude: -4.005369544029236
+            },
+            {
+              latitude: 55.93869450713453,
+              longitude: -4.005450010299682
+            },
+            {
+              latitude: 55.93862840804922,
+              longitude: -4.006324410438538
+            }
+          ],
+          heading: 90
+        },
+        allow_boarding: true,
+        allow_drop_off: true,
+        booking_cut_off_mins: 10,
+        pre_booked_only: true,
+        skipped: true,
+        predictions: {
+          state_of_charge: 0.5002243636363637
+        }
+      },
+      {
+        id: 925808,
+        departure: {
+          scheduled: '2024-03-30T20:40:00+00:00',
+          estimated: '2024-03-30T20:41:17+00:00'
+        },
+        arrival: {
+          scheduled: '2024-03-30T20:40:00+00:00',
+          estimated: '2024-03-30T20:41:17+00:00'
+        },
+        location: {
+          id: 68,
+          type: 'STOP_POINT',
+          name: 'Cumbernauld (Stance 1)',
+          region_name: 'Cumbernauld',
+          code: 'CUB',
+          code_detail: 'Cumbernauld',
+          detailed_name: 'Town Centre (Stance 1)',
+          direction: 'EASTBOUND',
+          lon: -3.99097,
+          lat: 55.94666,
+          google_place_id: 'ChIJN9ZOfE5viEgRcXzakQIKb2Q',
+          atco_code: '61601719',
+          timezone: 'Europe/London',
+          zone: [
+            {
+              latitude: 55.9468328461187,
+              longitude: -3.990748822689055
+            },
+            {
+              latitude: 55.946708185311365,
+              longitude: -3.990512788295744
+            },
+            {
+              latitude: 55.94643783519361,
+              longitude: -3.990987539291381
+            },
+            {
+              latitude: 55.946573010488414,
+              longitude: -3.991234302520751
+            },
+            {
+              latitude: 55.9468328461187,
+              longitude: -3.990748822689055
+            }
+          ],
+          heading: 45
+        },
+        allow_boarding: true,
+        allow_drop_off: true,
+        booking_cut_off_mins: 10,
+        pre_booked_only: true,
+        skipped: true,
+        predictions: {
+          state_of_charge: 0.48899936363636365
+        }
+      },
+      {
+        id: 925809,
+        departure: {
+          scheduled: '2024-03-30T20:58:00+00:00',
+          actual: '2024-03-30T20:58:45+00:00',
+          estimated: '2024-03-30T20:58:00+00:00'
+        },
+        arrival: {
+          scheduled: '2024-03-30T20:58:00+00:00',
+          actual: '2024-03-30T20:57:13+00:00',
+          estimated: '2024-03-30T20:57:07+00:00'
+        },
+        location: {
+          id: 63,
+          type: 'STOP_POINT',
+          name: 'Stirling Castleview P&R',
+          region_name: 'Stirling',
+          code: 'STG',
+          code_detail: 'Castleview P&R',
+          detailed_name: 'Castleview P&R',
+          lon: -3.96722,
+          lat: 56.13107,
+          google_place_id: 'ChIJSQSufX1iiEgRRa8M6dFAs6k',
+          atco_code: '66004811901',
+          timezone: 'Europe/London',
+          zone: [
+            {
+              latitude: 56.13118289276918,
+              longitude: -3.967764973640442
+            },
+            {
+              latitude: 56.131332370189206,
+              longitude: -3.9674779772758484
+            },
+            {
+              latitude: 56.131082742572715,
+              longitude: -3.967027366161346
+            },
+            {
+              latitude: 56.13087945181964,
+              longitude: -3.9670005440711975
+            },
+            {
+              latitude: 56.130871977874406,
+              longitude: -3.967279493808747
+            },
+            {
+              latitude: 56.13118289276918,
+              longitude: -3.967764973640442
+            }
+          ],
+          heading: 120
+        },
+        allow_boarding: true,
+        allow_drop_off: true,
+        booking_cut_off_mins: 10,
+        pre_booked_only: true,
+        skipped: false,
+        predictions: {
+          state_of_charge: 0.42361109090909094
+        }
+      },
+      {
+        id: 925810,
+        departure: {
+          scheduled: '2024-03-30T21:07:00+00:00',
+          estimated: '2024-03-30T21:07:00+00:00'
+        },
+        arrival: {
+          scheduled: '2024-03-30T21:07:00+00:00',
+          estimated: '2024-03-30T21:05:32+00:00'
+        },
+        location: {
+          id: 69,
+          type: 'STOP_POINT',
+          name: 'Dunblane Police Station',
+          region_name: 'Dunblane',
+          code: 'DBL',
+          code_detail: 'Dunblane',
+          detailed_name: 'Police Station (Northbound)',
+          lon: -3.96279,
+          lat: 56.18619,
+          google_place_id: 'ChIJPXP-QfiIiEgR3vF9KrM8vQM',
+          atco_code: '66005810019',
+          timezone: 'Europe/London',
+          zone: [
+            {
+              latitude: 56.18634241608172,
+              longitude: -3.9627733826637264
+            },
+            {
+              latitude: 56.18624987276328,
+              longitude: -3.9624944329261775
+            },
+            {
+              latitude: 56.18601105026525,
+              longitude: -3.962768018245696
+            },
+            {
+              latitude: 56.18613493962162,
+              longitude: -3.963063061237334
+            },
+            {
+              latitude: 56.18634241608172,
+              longitude: -3.9627733826637264
+            }
+          ],
+          heading: 45
+        },
+        allow_boarding: true,
+        allow_drop_off: true,
+        booking_cut_off_mins: 10,
+        pre_booked_only: true,
+        skipped: false,
+        predictions: {
+          state_of_charge: 0.39946572727272733
+        }
+      },
+      {
+        id: 925811,
+        departure: {
+          scheduled: '2024-03-30T21:16:00+00:00',
+          estimated: '2024-03-30T21:16:00+00:00'
+        },
+        arrival: {
+          scheduled: '2024-03-30T21:16:00+00:00',
+          estimated: '2024-03-30T21:14:00+00:00'
+        },
+        location: {
+          id: 70,
+          type: 'STOP_POINT',
+          name: 'Greenloaning',
+          region_name: 'Greenloaning',
+          code: 'GRLN',
+          code_detail: 'Greenloaning',
+          detailed_name: 'Sherrifmuir Close (Eastbound)',
+          direction: 'EASTBOUND',
+          lon: -3.88549,
+          lat: 56.242775,
+          google_place_id: 'ChIJ42A2SduFiEgRQslydVkoCbg',
+          atco_code: '64802317',
+          timezone: 'Europe/London',
+          zone: [
+            {
+              latitude: 56.24283721814544,
+              longitude: -3.886019289493561
+            },
+            {
+              latitude: 56.242646442082496,
+              longitude: -3.886051476001739
+            },
+            {
+              latitude: 56.242613652350975,
+              longitude: -3.8851878046989436
+            },
+            {
+              latitude: 56.24282529466935,
+              longitude: -3.885160982608795
+            },
+            {
+              latitude: 56.24283721814544,
+              longitude: -3.886019289493561
+            }
+          ],
+          heading: 90
+        },
+        allow_boarding: true,
+        allow_drop_off: true,
+        booking_cut_off_mins: 10,
+        pre_booked_only: true,
+        skipped: false,
+        predictions: {
+          state_of_charge: 0.37537027272727275
+        }
+      },
+      {
+        id: 925812,
+        departure: {
+          scheduled: '2024-03-30T21:23:00+00:00',
+          estimated: '2024-03-30T21:23:00+00:00'
+        },
+        arrival: {
+          scheduled: '2024-03-30T21:23:00+00:00',
+          estimated: '2024-03-30T21:23:00+00:00'
+        },
+        location: {
+          id: 71,
+          type: 'STOP_POINT',
+          name: 'Auchterarder (on A9)',
+          region_name: 'Auchterarder',
+          code: 'AUCH',
+          code_detail: 'Auchterarder',
+          detailed_name: 'A9 Eastbound (near Gleneagles Station)',
+          direction: 'EASTBOUND',
+          lon: -3.73304,
+          lat: 56.27924,
+          google_place_id: 'ChIJ-SVZTliCiEgRG__FCoKGjJo',
+          atco_code: '64802322',
+          timezone: 'Europe/London',
+          zone: [
+            {
+              latitude: 56.27947244018778,
+              longitude: -3.73308777809143
+            },
+            {
+              latitude: 56.279415857837826,
+              longitude: -3.7327283620834346
+            },
+            {
+              latitude: 56.278960217968205,
+              longitude: -3.733044862747192
+            },
+            {
+              latitude: 56.27901382294052,
+              longitude: -3.7334364652633667
+            },
+            {
+              latitude: 56.27947244018778,
+              longitude: -3.73308777809143
+            }
+          ],
+          heading: 0
+        },
+        allow_boarding: true,
+        allow_drop_off: true,
+        booking_cut_off_mins: 10,
+        pre_booked_only: true,
+        skipped: false,
+        predictions: {
+          state_of_charge: 0.3441166363636364
+        }
+      },
+      {
+        id: 925813,
+        departure: {
+          scheduled: '2024-03-30T21:38:00+00:00',
+          estimated: '2024-03-30T21:38:00+00:00'
+        },
+        arrival: {
+          scheduled: '2024-03-30T21:38:00+00:00',
+          estimated: '2024-03-30T21:38:00+00:00'
+        },
+        location: {
+          id: 59,
+          type: 'STOP_POINT',
+          name: 'Perth Broxden P&R',
+          region_name: 'Perth',
+          code: 'PER',
+          code_detail: 'Broxden P&R',
+          detailed_name: 'Broxden P&R (Stop B)',
+          lon: -3.478947,
+          lat: 56.386863,
+          google_place_id: 'ChIJxZ7u_9AkhkgRpB6KQ_g6ZYw',
+          atco_code: '64804501',
+          timezone: 'Europe/London',
+          zone: [
+            {
+              latitude: 56.38712740706226,
+              longitude: -3.4793657193675305
+            },
+            {
+              latitude: 56.38664819902129,
+              longitude: -3.4795290494690327
+            },
+            {
+              latitude: 56.38652613556353,
+              longitude: -3.4783367404408394
+            },
+            {
+              latitude: 56.38704603249111,
+              longitude: -3.478140743880406
+            },
+            {
+              latitude: 56.38712740706226,
+              longitude: -3.4793657193675305
+            }
+          ],
+          heading: 180
+        },
+        allow_boarding: true,
+        allow_drop_off: true,
+        booking_cut_off_mins: 10,
+        pre_booked_only: true,
+        skipped: false,
+        predictions: {
+          state_of_charge: 0.2852448181818182
+        }
+      },
+      {
+        id: 925814,
+        departure: {
+          scheduled: '2024-03-30T21:51:00+00:00',
+          estimated: '2024-03-30T21:51:00+00:00'
+        },
+        arrival: {
+          scheduled: '2024-03-30T21:51:00+00:00',
+          estimated: '2024-03-30T21:51:00+00:00'
+        },
+        location: {
+          id: 31,
+          type: 'STOP_POINT',
+          name: 'St Madoes',
+          region_name: 'St Madoes',
+          code: 'STMD',
+          code_detail: 'St Madoes',
+          detailed_name: 'St Madoes Green',
+          direction: 'WESTBOUND',
+          lon: -3.30666,
+          lat: 56.37536,
+          google_place_id: 'ChIJ-7_7UqQ5hkgR54w_LXj3974',
+          atco_code: '64801650',
+          timezone: 'Europe/London',
+          zone: [
+            {
+              latitude: 56.37553553466398,
+              longitude: -3.3067435026168814
+            },
+            {
+              latitude: 56.37543057572143,
+              longitude: -3.30636441696697
+            },
+            {
+              latitude: 56.37495132566275,
+              longitude: -3.306421637535095
+            },
+            {
+              latitude: 56.37523451962018,
+              longitude: -3.3070760965347286
+            },
+            {
+              latitude: 56.37553553466398,
+              longitude: -3.3067435026168814
+            }
+          ],
+          heading: 315
+        },
+        allow_boarding: true,
+        allow_drop_off: true,
+        booking_cut_off_mins: 10,
+        pre_booked_only: true,
+        skipped: false,
+        predictions: {
+          state_of_charge: 0.24581
+        }
+      },
+      {
+        id: 925815,
+        departure: {
+          scheduled: '2024-03-30T21:59:00+00:00',
+          estimated: '2024-03-30T21:59:00+00:00'
+        },
+        arrival: {
+          scheduled: '2024-03-30T21:59:00+00:00',
+          estimated: '2024-03-30T21:59:00+00:00'
+        },
+        location: {
+          id: 55,
+          type: 'STOP_POINT',
+          name: 'Inchture',
+          region_name: 'Inchture',
+          code: 'INCT',
+          code_detail: 'Inchture',
+          detailed_name: 'Ballindean Farm (Eastbound)',
+          direction: 'EASTBOUND',
+          lon: -3.17702,
+          lat: 56.44305,
+          google_place_id: 'ChIJ-1iY-ydBhkgRNcnZgD157Do',
+          atco_code: '64803287',
+          timezone: 'Europe/London',
+          zone: [
+            {
+              latitude: 56.44299590254977,
+              longitude: -3.177461028044491
+            },
+            {
+              latitude: 56.443300335755744,
+              longitude: -3.176892399569624
+            },
+            {
+              latitude: 56.44307893001316,
+              longitude: -3.176456093679008
+            },
+            {
+              latitude: 56.44280019423982,
+              longitude: -3.176996111869812
+            },
+            {
+              latitude: 56.44299590254977,
+              longitude: -3.177461028044491
+            }
+          ],
+          heading: 0
+        },
+        allow_boarding: true,
+        allow_drop_off: true,
+        booking_cut_off_mins: 10,
+        pre_booked_only: true,
+        skipped: false,
+        predictions: {
+          state_of_charge: 0.21389972727272727
+        }
+      },
+      {
+        id: 925816,
+        departure: {
+          scheduled: '2024-03-30T22:02:00+00:00',
+          estimated: '2024-03-30T22:02:00+00:00'
+        },
+        arrival: {
+          scheduled: '2024-03-30T22:02:00+00:00',
+          estimated: '2024-03-30T22:02:00+00:00'
+        },
+        location: {
+          id: 34,
+          type: 'STOP_POINT',
+          name: 'Longforgan',
+          region_name: 'Longforgan',
+          code: 'LFG',
+          code_detail: 'Longforgan',
+          detailed_name: 'Eastbound Slip Road',
+          direction: 'EASTBOUND',
+          lon: -3.12693,
+          lat: 56.45812,
+          google_place_id: 'ChIJjSmEKGFBhkgRhBDRIUX9tpo',
+          atco_code: '64804242',
+          timezone: 'Europe/London',
+          zone: [
+            {
+              latitude: 56.458254093892535,
+              longitude: -3.127371668815613
+            },
+            {
+              latitude: 56.45818690797762,
+              longitude: -3.1265455484390254
+            },
+            {
+              latitude: 56.45794582840483,
+              longitude: -3.126602768679731
+            },
+            {
+              latitude: 56.458024871045936,
+              longitude: -3.127478957176208
+            },
+            {
+              latitude: 56.458254093892535,
+              longitude: -3.127371668815613
+            }
+          ],
+          heading: 90
+        },
+        allow_boarding: true,
+        allow_drop_off: true,
+        booking_cut_off_mins: 10,
+        pre_booked_only: true,
+        skipped: false,
+        predictions: {
+          state_of_charge: 0.203557
+        }
+      },
+      {
+        id: 925817,
+        departure: {
+          scheduled: '2024-03-30T22:06:00+00:00',
+          estimated: '2024-03-30T22:06:00+00:00'
+        },
+        arrival: {
+          scheduled: '2024-03-30T22:06:00+00:00',
+          estimated: '2024-03-30T22:06:00+00:00'
+        },
+        location: {
+          id: 2,
+          type: 'STOP_POINT',
+          name: 'Dundee West',
+          region_name: 'Dundee West',
+          code: 'DUN',
+          code_detail: 'Dundee West',
+          detailed_name: 'Apollo Way',
+          lon: -3.05468,
+          lat: 56.462677,
+          google_place_id: 'ChIJE2gJVwlDhkgRBp7tM4HaqS0',
+          atco_code: '6400L00019',
+          timezone: 'Europe/London',
+          zone: [
+            {
+              latitude: 56.46256507145948,
+              longitude: -3.0550262330871196
+            },
+            {
+              latitude: 56.462403053205456,
+              longitude: -3.0547294020652775
+            },
+            {
+              latitude: 56.46270436715984,
+              longitude: -3.0541500449180607
+            },
+            {
+              latitude: 56.462859468797895,
+              longitude: -3.054468333612022
+            },
+            {
+              latitude: 56.46256507145948,
+              longitude: -3.0550262330871196
+            }
+          ],
+          heading: 45
+        },
+        allow_boarding: true,
+        allow_drop_off: true,
+        booking_cut_off_mins: 10,
+        pre_booked_only: true,
+        skipped: false,
+        predictions: {
+          state_of_charge: 0.19015372727272728
+        }
+      },
+      {
+        id: 925818,
+        departure: {
+          scheduled: '2024-03-30T22:14:00+00:00',
+          estimated: '2024-03-30T22:14:00+00:00'
+        },
+        arrival: {
+          scheduled: '2024-03-30T22:14:00+00:00',
+          estimated: '2024-03-30T22:14:00+00:00'
+        },
+        location: {
+          id: 72,
+          type: 'STOP_POINT',
+          name: 'Dundee Railway Station',
+          region_name: 'Dundee',
+          code: 'DUN',
+          code_detail: 'Railway Station',
+          detailed_name: 'Railway Station',
+          lon: -2.96917,
+          lat: 56.45786,
+          google_place_id: 'ChIJG7NMI5VchkgRwqustDfijoo',
+          atco_code: '640017235',
+          timezone: 'Europe/London',
+          zone: [
+            {
+              latitude: 56.45806277318695,
+              longitude: -2.969163818560529
+            },
+            {
+              latitude: 56.45791515460716,
+              longitude: -2.9694897532849214
+            },
+            {
+              latitude: 56.45743686646796,
+              longitude: -2.9687523927608863
+            },
+            {
+              latitude: 56.457637630124,
+              longitude: -2.9683249373846348
+            },
+            {
+              latitude: 56.45806277318695,
+              longitude: -2.969163818560529
+            }
+          ],
+          heading: 330
+        },
+        allow_boarding: false,
+        allow_drop_off: true,
+        booking_cut_off_mins: 0,
+        pre_booked_only: false,
+        skipped: false,
+        predictions: {
+          state_of_charge: 0.1722047272727273
+        }
+      }
+    ],
+    vehicle: {
+      seat: 38,
+      wheelchair: 1,
+      bicycle: 2,
+      id: 33,
+      plate_number: 'SG23 ORX',
+      name: 'Yutong Coach (SG23 ORX)',
+      has_wifi: true,
+      has_toilet: true,
+      type: 'coach',
+      brand: 'Yutong',
+      colour: 'Black',
+      is_backup_vehicle: false,
+      owner_id: 1,
+      gps: {
+        last_updated: '2024-03-30T21:01:23+00:00',
+        longitude: -3.97133,
+        latitude: 56.14194,
+        heading: 5
+      },
+      secondary_gps: {
+        last_updated: '2024-03-30T21:01:24.929000+00:00',
+        longitude: -3.971342096409118,
+        latitude: 56.142433296504976,
+        heading: 7.221601486206055
+      }
+    },
+    description: {
+      route_number: 'E3',
+      pattern_id: 5341,
+      calendar_date: '2024-03-30',
+      type: 'public',
+      is_cancelled: false,
+      route_id: 5
+    }
+  }
+}

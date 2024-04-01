@@ -1,3 +1,8 @@
+export interface Quotes {
+  quotes: Quote[]
+  min_card_transaction: number
+}
+
 export interface Quote {
   availability: Availability
   prices: Prices
@@ -79,9 +84,4 @@ export interface Description {
 export interface Amenities {
   has_wifi: boolean
   has_toilet: boolean
-}
-
-export interface Quotes {
-  quotes: Quote[]
-  min_card_transaction: number
 }

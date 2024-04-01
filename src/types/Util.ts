@@ -17,10 +17,10 @@ export function nextStop(routeStop: RouteStop): boolean {
 }
 
 export function stopVisitationContextString(routeStop: RouteStop): string {
-  const scheduledString = new Date(routeStop.arrival.scheduled).toLocaleTimeString()
-  const estimatedString = new Date(routeStop.arrival.estimated).toLocaleTimeString()
+  const scheduledString = toMinutesString(routeStop.arrival.scheduled)
+  const estimatedString = toMinutesString(routeStop.arrival.estimated)
   const departedString = routeStop.departure.actual
-    ? new Date(routeStop.departure.actual).toLocaleTimeString()
+    ? toMinutesString(routeStop.departure.actual)
     : ''
   const locationName = routeStop.location.name
 
@@ -31,4 +31,11 @@ export function stopVisitationContextString(routeStop: RouteStop): string {
   } else {
     return `${routeStop.location.name}<br>Scheduled: ${scheduledString}<br>Estimated: ${estimatedString}`
   }
+}
+
+export function toMinutesString(dateString: string) {
+  return new Date(dateString).toLocaleTimeString(navigator.language, {
+    hour: '2-digit',
+    minute: '2-digit'
+  })
 }
