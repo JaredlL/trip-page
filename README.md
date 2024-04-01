@@ -19,7 +19,7 @@
   - Bus "tracking" can be toggled (represented by the pin icon on the bus row)
   - Bus facilities (WiFi / WC) displayed
 
-## ToDo
+## Considerations / ToDo
 
 - Test coverage is thin and at best can be seen as an example / base to be built upon
 - Styling is basic, intended for mobile screens but there are known issues (dark mode doesnt work well)
@@ -28,6 +28,7 @@
 - No real consideration yet for internationalization
 - Some errors are logged to console or go to alert() but could be displayed better
   - Errors fetching data (eg if the phone is offline) should definitely be displayed better
+- The leaflet openstreetmap tiles are arguably too detailed and might affect performnce on a mobile with poor internet connection. Perhaps there are less detailed but more efficient tilesets.
 
 ## Recommended IDE Setup
 
