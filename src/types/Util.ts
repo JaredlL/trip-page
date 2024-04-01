@@ -29,7 +29,7 @@ export function stopVisitationContextString(routeStop: RouteStop): string {
   } else if (routeStop.departure.actual != null) {
     return `${locationName}<br>Departed: ${departedString}`
   } else {
-    return `${routeStop.location.name}<br>Scheduled: ${scheduledString}<br>Estimated: ${estimatedString}`
+    return `${routeStop.location.name}<br>Estimated: ${estimatedString}<br>Scheduled: ${scheduledString}`
   }
 }
 
