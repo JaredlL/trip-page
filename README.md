@@ -27,6 +27,7 @@
 - Icons are mostly placeholder quality
 - No real consideration yet for internationalization
 - Some errors are logged to console or go to alert() but could be displayed better
+  - Errors fetching data (eg if the phone is offline) should definitely be displayed better
 
 ## Recommended IDE Setup
 
