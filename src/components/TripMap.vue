@@ -102,8 +102,7 @@ watch(
         })
       }
     }
-  },
-  { deep: true }
+  }
 )
 
 // Watch for triggers to zoom to focus item

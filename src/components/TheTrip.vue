@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed, inject } from 'vue'
 import { useRoute } from 'vue-router'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import type { DateNow } from '@/types/Clock.ts'
 import { DateNowKey } from '../InjectionKeys'
 import type { RouteData, RouteStop, Vehicle } from '@/types/RouteData.ts'
@@ -18,6 +18,7 @@ const tripId = route.params.tripUid
 const routeData = ref<RouteData>()
 const currentTime = ref(dateNow())
 const focusItem = ref<RouteStop | Vehicle>()
+const errorMessage = ref<String | undefined>()
 
 const CancelToken = axios.CancelToken
 const cancelTokenSource = CancelToken.source()
@@ -45,8 +46,25 @@ const fetchRouteData = async () => {
       }
     )
     routeData.value = tripsResponse?.data
+    errorMessage.value = undefined
   } catch (error) {
-    console.error('Error fetching trip:', error)
+    const axiosError = error as AxiosError
+    if (axiosError.response) {
+      console.error('Server responded with status code:', axiosError.response.status)
+      console.error('Response data:', axiosError.response.data)
+      errorMessage.value = `Recieved error response when retrieving bus update: ${axiosError.response.data}`
+    } else if (axiosError.request) {
+      if (!navigator.onLine) {
+        console.error('User is offline')
+        errorMessage.value = 'You are offline'
+      } else {
+        console.error('Network Error:', axiosError.message)
+        errorMessage.value = `Network Error: ${axiosError.message}`
+      }
+    } else {
+      console.error('Error', axiosError.message)
+    }
+    console.error(error)
   } finally {
     isFetching.value = false
   }
@@ -134,6 +152,9 @@ function getEstimatedTimeColor(routeStop: RouteStop) {
       :style="{ display: routeData?.description.is_cancelled ? 'inline' : 'none' }"
     >
       Alert - This trip has been cancelled
+    </h1>
+    <h1 class="cancelled" id="error" :style="{ display: errorMessage ? 'inline' : 'none' }">
+      {{ errorMessage }}
     </h1>
     <h1
       class="finished"

@@ -114,8 +114,8 @@ describe(stopVisitationContextString.name, () => {
     const result = stopVisitationContextString(stop)
 
     // [assert]
-    expect(result).contains(`${locationName}<br>Scheduled:`)
-    expect(result).contains(`<br>Estimated:`)
+    expect(result).contains(`${locationName}<br>Estimated:`)
+    expect(result).contains(`<br>Scheduled:`)
   })
 })
 
